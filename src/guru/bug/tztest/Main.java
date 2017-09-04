@@ -1,6 +1,7 @@
 package guru.bug.tztest;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
-        List<GameResult> resultList = new ArrayList<>();
+        List<GameResult> resultList = loadLeaderboard();
         do {
             GameResult result = new GameResult();
             System.out.println("Enter your name");
@@ -47,6 +48,26 @@ public class Main {
             System.out.print("Do you want to play again? (Y/n) ");
         } while (!scanner.next().equals("n"));
         System.out.println("Good bye!");
+        storeLeaderboard(resultList);
+    }
+
+    private static List<GameResult> loadLeaderboard() {
+        List<GameResult> list = new ArrayList<>();
+        try (Scanner lbscanner = new Scanner(leaderboardFilePath)) {
+            while (lbscanner.hasNext()) {
+                GameResult result = new GameResult();
+                result.name = lbscanner.next();
+                result.attempts = lbscanner.nextInt();
+                result.time = lbscanner.nextLong();
+                list.add(result);
+            }
+        } catch (IOException e) {
+            System.out.println("cannot read leader board");
+        }
+        return list;
+    }
+
+    private static void storeLeaderboard(List<GameResult> resultList) {
         try (Writer out = Files.newBufferedWriter(leaderboardFilePath)) {
             for (GameResult r : resultList) {
                 String line = String.format("%s %d %d", r.name, r.attempts, r.time);
@@ -54,7 +75,7 @@ public class Main {
                 out.write("\n");
             }
         } catch (IOException e) {
-            System.out.println("Sorry, cannot write to file");
+            System.out.println("Sorry, cannot store leader board");
         }
     }
 }
