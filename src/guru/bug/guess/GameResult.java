@@ -1,4 +1,4 @@
-package guru.bug.tztest;
+package guru.bug.guess;
 
 /**
  * @author Dimitrijs Fedotovs <a href="http://www.bug.guru">www.bug.guru</a>
