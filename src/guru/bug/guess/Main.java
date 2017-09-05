@@ -54,11 +54,11 @@ public class Main {
 
     private static void printLeaderBoard() {
         System.out.println("Leader Board:");
-        System.out.println("\t Name \t\t Attempts \t\t Time");
+        System.out.printf("\t %-10s \t\t %8s \t\t %5s\n", "Name", "Attempts", "Time");
         int maxDisplay = Math.min(4, leaderBoard.size());
         List<GameResult> top = leaderBoard.subList(0, maxDisplay);
         for (GameResult r : top) {
-            System.out.printf("\t %s \t\t %8d \t\t %5.1f sec\n", r.name, r.attempts, r.time / 1000.0);
+            System.out.printf("\t %-10s \t\t %8d \t\t %5.1f sec\n", r.name, r.attempts, r.time / 1000.0);
         }
     }
 
