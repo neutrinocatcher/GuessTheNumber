@@ -105,6 +105,7 @@ public class Main {
                 result.name = in.nextLine();
                 result.attempts = in.nextInt();
                 result.time = in.nextLong();
+                in.nextLine();
                 list.add(result);
             }
         } catch (IOException e) {
